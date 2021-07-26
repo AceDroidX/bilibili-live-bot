@@ -9,7 +9,8 @@
     "clear": "rm src/*.js;exit 0",
     "build": "tsc",
     "dev": "tsc -w",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "serve": "tsc&&node src/index.js"
   },
   "author": "AceDroidX",
   "license": "ISC",

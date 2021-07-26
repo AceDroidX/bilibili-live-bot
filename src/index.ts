@@ -3,15 +3,15 @@ const BILILIVEPREFIX = 'https://live.bilibili.com'
 
 import { LiveWS, LiveTCP, KeepLiveWS, KeepLiveTCP } from 'bilibili-live-ws';
 import axios from 'axios';
-import { config } from './config'
+import config from './config'
 
-config.room_id.forEach((element: number) => {
-    openOneRoom(element)
+config.get('room_id').split(',').forEach((element: string) => {
+    openOneRoom(parseInt(element))
 });
 
 function openOneRoom(id: number) {
     const live = new KeepLiveTCP(id)
-    live.on('open', () => console.log(timePrefix() +`<${id}>Connection is established`))
+    live.on('open', () => console.log(timePrefix() + `<${id}>Connection is established`))
     // Connection is established
     live.on('live', () => {
         live.on('heartbeat', () => { console.log(timePrefix() + `<${id}>heartbeat`) })
@@ -28,12 +28,12 @@ function openOneRoom(id: number) {
 
 function sendMsgToKHL(msg: string) {
     axios.post(KHLAPIPREFIX + '/api/v3/message/create', {
-        target_id: config.channel_id,
+        target_id: config.get('channel_id'),
         content: msg
     }, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bot ' + config.khl_token
+            'Authorization': 'Bot ' + config.get('khl_token')
         }
     })
         .then(function (response) {
