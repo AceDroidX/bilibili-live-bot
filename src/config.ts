@@ -18,27 +18,24 @@ export class ConfigManager {
         }
     }
 
-    get(key: string): any {
+    get(key: string): string | undefined | number {
         if (this.json === undefined) {
             var env = process.env[key]
             if (env == undefined) {
                 console.log('设置中没有这个key')
                 return undefined
             } else {
-                if (isNumber(env)) {
-                    if (isInt(env)) {
-                        return parseInt(env)
-                    } else {
-                        return parseFloat(env)
-                    }
-                } else {
+                var n=Number(env)
+                if (isNaN(n)) {
                     return env
+                } else {
+                    return n
                 }
             }
         } else {
             if (isValidKey(key, this.json)) {
                 return this.json[key];
-            }else{
+            } else {
                 console.log('设置中没有这个key')
                 return undefined
             }
@@ -49,10 +46,4 @@ export default new ConfigManager();
 
 function isValidKey(key: string | number | symbol, object: object): key is keyof typeof object {
     return key in object;
-}
-function isNumber(str: string) {
-    return !isNaN(parseFloat(str))
-}
-function isInt(str: string) {
-    return Number.isInteger(parseFloat(str))
 }

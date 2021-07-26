@@ -5,9 +5,14 @@ import { LiveWS, LiveTCP, KeepLiveWS, KeepLiveTCP } from 'bilibili-live-ws';
 import axios from 'axios';
 import config from './config'
 
-config.get('room_id').split(',').forEach((element: string) => {
-    openOneRoom(parseInt(element))
-});
+var roomid = config.get('room_id')
+if (typeof roomid == "string") {
+    roomid.split(',').forEach((element: string) => {
+        openOneRoom(parseInt(element))
+    });
+} else {
+    console.error('房间id获取出错:' + typeof roomid)
+}
 
 function openOneRoom(id: number) {
     const live = new KeepLiveTCP(id)
