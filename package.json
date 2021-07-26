@@ -1,0 +1,21 @@
+{
+  "name": "bilibili-live-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clear": "rm src/*.js;exit 0",
+    "build": "tsc",
+    "dev": "tsc -w",
+    "prepare": "npm run build"
+  },
+  "author": "AceDroidX",
+  "license": "ISC",
+  "dependencies": {
+    "bilibili-live-ws": "latest",
+    "axios": "latest",
+    "typescript": "latest"
+  }
+}
